@@ -414,11 +414,10 @@
         max-height: none;
         min-height: auto;
       }
-      /* 地圖隱藏，改為上方縮圖 */
-      .map-left {
-        height: 200px;
-        flex: none;
-      }
+      /* 手機：subnav 連結隱藏，只留標題 */
+      .about-subnav-inner .about-subnav-links { display: none; }
+      /* 手機：地圖左側隱藏 */
+      .map-left { display: none; }
       /* 右側資訊區改為全寬 row 佈局 */
       .map-right {
         width: 100%;
