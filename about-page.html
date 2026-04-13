@@ -228,18 +228,145 @@
     .feature-card { background: #f8f9fa; box-shadow: 0 8px 16px rgba(0,0,0,.12); display: flex; flex-direction: column; }
     .card-header { padding: 10px 16px; }
     .card-header-text { font-size: 15px; font-weight: 700; color: white; }
-    .card-img-placeholder { height: 160px; display: flex; align-items: center; justify-content: center; }
+    .card-img-placeholder { height: 160px; overflow: hidden; }
     .card-body { padding: 14px 16px; font-size: 14px; line-height: 1.6; color: #6c757d; flex: 1; }
 
     /* ── MAP ── */
-    .map-band { background: #f0f4ff; padding: 60px 0; }
-    .map-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-    .map-box { background: linear-gradient(135deg,#e8f0fe 0%,#dbeafe 60%,#e0f2fe 100%); border-radius: 12px; position: relative; height: 340px; overflow: hidden; }
-    .map-overlay-left { position: absolute; inset: 0; background: linear-gradient(to right,white 0%,rgba(255,255,255,0) 40%); pointer-events: none; }
-    .map-label { position: absolute; left: 48px; top: 50%; transform: translateY(-50%); }
-    .map-pins-area { position: absolute; inset: 0; }
-    .pin { position: absolute; display: flex; align-items: center; gap: 7px; font-size: 13px; color: #6d6d6d; white-space: nowrap; }
-    .pin-dot { width: 10px; height: 10px; background: #1a4fe8; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(26,79,232,.2); }
+    .map-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      max-height: 1080px;
+      overflow: hidden;
+      background: #e8edf5;
+    }
+    .map-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      user-select: none;
+      pointer-events: none;
+    }
+    /* 左側漸層遮罩讓文字可讀 */
+    .map-left-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,.88) 0%, rgba(255,255,255,.55) 32%, rgba(255,255,255,0) 55%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* 左側資訊面板 */
+    .map-info-panel {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 400px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      padding: 60px 0 60px 80px;
+    }
+    .map-info-inner { width: 100%; }
+    .map-info-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .map-info-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #212529;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    /* 地點切換卡 */
+    .map-location-card {
+      background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,.12);
+      padding: 20px 24px;
+      min-height: 80px;
+      transition: opacity .3s ease;
+    }
+    .map-location-card { transition: opacity .15s ease; }
+    .map-loc-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a4fe8;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .map-loc-name::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #1a4fe8;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .map-loc-detail {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.7;
+    }
+    .map-loc-detail p { margin: 0; }
+    /* 標點 */
+    .map-pins-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+    }
+    .map-pin-btn {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .map-pin-btn:hover .pin-label,
+    .map-pin-btn.is-active .pin-label { color: #1a4fe8; font-weight: 700; }
+    .map-pin-btn:hover .pin-needle,
+    .map-pin-btn.is-active .pin-needle { background: #1a4fe8; }
+    .map-pin-btn:hover .pin-circle,
+    .map-pin-btn.is-active .pin-circle {
+      background: #1a4fe8;
+      box-shadow: 0 0 0 4px rgba(26,79,232,.25);
+    }
+    .pin-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      white-space: nowrap;
+      background: rgba(255,255,255,.85);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      transition: color .2s;
+      line-height: 1.4;
+    }
+    .pin-needle {
+      width: 2px;
+      height: 14px;
+      background: #6c757d;
+      transition: background .2s;
+    }
+    .pin-circle {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #6c757d;
+      box-shadow: 0 0 0 3px rgba(108,117,125,.2);
+      transition: background .2s, box-shadow .2s;
+    }
+    .map-pin-btn.is-active .pin-needle { height: 18px; }
 
     /* ── BULLETS ── */
     .bullet-list { display: flex; flex-direction: column; gap: 12px; }
@@ -262,7 +389,7 @@
     .promise-block { font-size: 20px; font-weight: 700; color: #212529; line-height: 1.6; max-width: 700px; margin: 0 auto; text-align: center; }
 
     /* ── BAND ── */
-    .blue-band { background: linear-gradient(135deg,#0c1445 0%,#1a4fe8 50%,#0ea5e9 100%); height: 200px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .blue-band { position: relative; width: 100%; height: 400px; overflow: hidden; }
     .footer-hero { background: linear-gradient(to right,#0c1a4a,#1a4fe8,#0ea5e9,#38c1ff); height: 180px; display: flex; align-items: center; justify-content: center; }
   </style>
 </head>
@@ -1180,30 +1307,22 @@
         <div class="cards-grid">
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">技術自主、轉型落地</div></div>
-            <div class="card-img-placeholder" style="background:linear-gradient(135deg,#1a4fe8,#0ea5e9)">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="24" stroke="rgba(255,255,255,.5)" stroke-width="2"/><path d="M18 28 L28 18 L38 28 L28 38 Z" fill="rgba(255,255,255,.85)"/></svg>
-            </div>
+            <div class="card-img-placeholder"><img src="images/154-1.webp" alt="技術自主、轉型落地" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">鼎新數智結合長期累積的 ERP 與產業營運知識，以自研技術建構可落地的「企業級Agent運行生態平台」，讓 AI 真正進入企業日常營運流程，推動營運流程的變革，邁向數智轉型。</div>
           </div>
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">價值交付為方法論</div></div>
-            <div class="card-img-placeholder" style="background:linear-gradient(135deg,#0ea5e9,#38c1ff)">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><rect x="14" y="14" width="28" height="28" rx="4" stroke="rgba(255,255,255,.7)" stroke-width="2" fill="rgba(255,255,255,.2)"/><path d="M21 28 L26 33 L35 23" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
+            <div class="card-img-placeholder"><img src="images/154-2.webp" alt="價值交付為方法論" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">鼎新數智始終以客戶真實需求為出發點，並以創造可驗證的企業營運效益為最終導向，發展出獨有的「價值交付」方法論，讓 AI 轉型能真正承接企業管理與營運需求，支持企業穩定成長。</div>
           </div>
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">驅動新的商業模式</div></div>
-            <div class="card-img-placeholder" style="background:linear-gradient(135deg,#1a4fe8,#7c3aed)">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><path d="M14 40 L24 22 L35 32 L46 14" stroke="rgba(255,255,255,.9)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="24" cy="22" r="3" fill="white"/><circle cx="35" cy="32" r="3" fill="white"/></svg>
-            </div>
+            <div class="card-img-placeholder"><img src="images/154-3.webp" alt="驅動新的商業模式" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">基於對「數智原生企業」的願景與「智能＋」戰略目標，鼎新數智以「用數據和智能技術創新生產力」為核心使命，將 AI 深度融入企業營運流程，重塑營運與商業模式。</div>
           </div>
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">建構AI生態系</div></div>
-            <div class="card-img-placeholder" style="background:linear-gradient(135deg,#059669,#0ea5e9)">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="9" fill="rgba(255,255,255,.8)"/><circle cx="14" cy="18" r="5" fill="rgba(255,255,255,.6)"/><circle cx="42" cy="18" r="5" fill="rgba(255,255,255,.6)"/><circle cx="14" cy="38" r="5" fill="rgba(255,255,255,.6)"/><circle cx="42" cy="38" r="5" fill="rgba(255,255,255,.6)"/><line x1="19" y1="23" x2="23" y2="25" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="37" y1="23" x2="33" y2="25" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="19" y1="33" x2="23" y2="31" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><line x1="37" y1="33" x2="33" y2="31" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/></svg>
-            </div>
+            <div class="card-img-placeholder"><img src="images/154-4.webp" alt="建構AI生態系" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">以平台為核心，串聯客戶、ISV夥伴與開發者，共同打造可共創、可擴充的 AI 應用生態系，讓場景持續累積、價值不斷放大，共利共榮，加速創新應用落地，推動數智價值在產業中持續擴散。</div>
           </div>
         </div>
@@ -1232,32 +1351,105 @@
       </div>
     </section>
 
-    <!-- ══ MAP ══ -->
-    <div class="map-band">
-      <div class="map-inner">
-        <div class="map-box">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.18" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid slice">
-            <defs><pattern id="mapgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a4fe8" stroke-width="0.8"/></pattern></defs>
-            <rect width="100%" height="100%" fill="url(#mapgrid)"/>
-            <path d="M100,120 Q200,90 350,140 Q500,180 650,150 Q800,120 950,130" fill="none" stroke="#1a4fe8" stroke-width="1.5" opacity=".5"/>
-            <ellipse cx="500" cy="170" rx="450" ry="150" fill="none" stroke="#1a4fe8" stroke-width="1" stroke-dasharray="6,10" opacity=".4"/>
-          </svg>
-          <div class="map-overlay-left"></div>
-          <div class="map-label">
-            <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#888;margin-bottom:8px">ASIA PACIFIC</div>
-            <div style="font-size:26px;font-weight:700;color:#212529;line-height:1.35">立足台灣<br>布局亞太</div>
-          </div>
-          <div class="map-pins-area">
-            <div class="pin" style="top:18%;left:72%"><div class="pin-dot"></div>台灣｜Taiwan</div>
-            <div class="pin" style="top:27%;left:62%"><div class="pin-dot"></div>中國｜China</div>
-            <div class="pin" style="top:48%;left:56%"><div class="pin-dot"></div>越南｜Vietnam</div>
-            <div class="pin" style="top:41%;left:49%"><div class="pin-dot"></div>泰國｜Thailand</div>
-            <div class="pin" style="top:60%;left:51%"><div class="pin-dot"></div>馬來西亞｜Malaysia</div>
-            <div class="pin" style="top:74%;left:61%"><div class="pin-dot"></div>印尼｜Indonesia</div>
+    <!-- ══ MAP（互動地圖，1920×1080）══ -->
+    <div class="map-section" id="mapSection">
+
+      <!-- 底圖 -->
+      <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
+
+      <!-- 左側遮罩 -->
+      <div class="map-left-fade"></div>
+
+      <!-- 左側資訊面板 -->
+      <div class="map-info-panel">
+        <div class="map-info-inner">
+          <div class="map-info-label">ASIA PACIFIC</div>
+          <div class="map-info-title">立足台灣<br>布局亞太</div>
+          <!-- 動態資訊卡 -->
+          <div class="map-location-card" id="mapInfoCard">
+            <div class="map-loc-name" id="mapLocName">點選地圖標點查看詳情</div>
+            <div class="map-loc-detail" id="mapLocDetail"></div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- 標點層（位置以底圖 1920×1080 為基準的百分比）-->
+      <div class="map-pins-layer">
+
+        <button class="map-pin-btn" style="left:68.5%;top:17%"
+          data-name="台灣｜Taiwan"
+          data-detail="<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>">
+          <span class="pin-label">台灣｜Taiwan</span>
+          <span class="pin-needle"></span>
+          <span class="pin-circle"></span>
+        </button>
+
+        <button class="map-pin-btn" style="left:58%;top:22%"
+          data-name="中國｜China"
+          data-detail="<p>華東地區：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東地區：東莞・廣州</p><p>特別行政區之一：深圳・珠海・福建・廈門</p><p>華南地區：重慶・成都</p><p>其他地區：昆山・惠州</p>">
+          <span class="pin-label">中國｜China</span>
+          <span class="pin-needle"></span>
+          <span class="pin-circle"></span>
+        </button>
+
+        <button class="map-pin-btn" style="left:46%;top:38%"
+          data-name="泰國｜Thailand"
+          data-detail="<p>曼谷・羅勇・春武里</p>">
+          <span class="pin-label">泰國｜Thailand</span>
+          <span class="pin-needle"></span>
+          <span class="pin-circle"></span>
+        </button>
+
+        <button class="map-pin-btn" style="left:53%;top:44%"
+          data-name="越南｜Vietnam"
+          data-detail="<p>河內・胡志明市・平陽</p>">
+          <span class="pin-label">越南｜Vietnam</span>
+          <span class="pin-needle"></span>
+          <span class="pin-circle"></span>
+        </button>
+
+        <button class="map-pin-btn" style="left:48%;top:57%"
+          data-name="馬來西亞｜Malaysia"
+          data-detail="<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>">
+          <span class="pin-label">馬來西亞｜Malaysia</span>
+          <span class="pin-needle"></span>
+          <span class="pin-circle"></span>
+        </button>
+
+        <button class="map-pin-btn" style="left:57%;top:72%"
+          data-name="印尼｜Indonesia"
+          data-detail="<p>雅加達・泗水</p>">
+          <span class="pin-label">印尼｜Indonesia</span>
+          <span class="pin-needle"></span>
+          <span class="pin-circle"></span>
+        </button>
+
+      </div><!-- /map-pins-layer -->
+    </div><!-- /map-section -->
+
+    <script>
+    (function(){
+      const pins    = document.querySelectorAll('.map-pin-btn');
+      const locName = document.getElementById('mapLocName');
+      const locDetail = document.getElementById('mapLocDetail');
+
+      pins.forEach(pin => {
+        pin.addEventListener('click', () => {
+          // 移除舊 active
+          pins.forEach(p => p.classList.remove('is-active'));
+          pin.classList.add('is-active');
+          // 更新資訊卡（淡入）
+          const card = document.getElementById('mapInfoCard');
+          card.style.opacity = '0';
+          setTimeout(() => {
+            locName.textContent   = pin.dataset.name;
+            locDetail.innerHTML   = pin.dataset.detail;
+            card.style.opacity    = '1';
+          }, 150);
+        });
+      });
+    })();
+    </script>
 
     <!-- ══ RECOGNITION ══ -->
     <section style="background:#f7f8fc">
@@ -1318,11 +1510,7 @@
 
     <!-- ══ BLUE BAND ══ -->
     <div class="blue-band">
-      <div style="position:absolute;inset:0;opacity:.12"><svg width="100%" height="100%" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid slice"><defs><pattern id="bb" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#bb)"/></svg></div>
-      <div style="position:relative;text-align:center;color:white;padding:40px">
-        <p style="font-size:12px;opacity:.7;margin-bottom:8px;letter-spacing:2px;text-transform:uppercase">50,000+ 客戶見證</p>
-        <p style="font-size:26px;font-weight:700">鼎新數智，與企業共同成長</p>
-      </div>
+      <img src="images/155.webp" alt="50,000+ 客戶見證" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
     </div>
 
     <!-- ══ FUTURE ══ -->
