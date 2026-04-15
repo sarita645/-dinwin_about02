@@ -46,7 +46,7 @@
     .section { max-width: 1320px; margin: 0 auto; padding: 80px 60px; }
     .section-center { text-align: center; }
     .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
-    h1.display { font-size: clamp(32px, 4vw, 48px); font-weight: 700; line-height: 1.2; color: #212529; }
+    .display { font-size: clamp(32px, 4vw, 48px); font-weight: 700; line-height: 1.2; color: #212529; }
     .body-text { font-size: 16px; line-height: 1.7; color: #374151; max-width: 900px; }
     .bordered-heading { border-left: 4px solid #1a4fe8; padding-left: 16px; font-size: 28px; font-weight: 700; color: #212529; margin-bottom: 24px; }
 
@@ -346,21 +346,22 @@
       pointer-events: auto;
     }
     .map-info-header {
-      background: #1a4fe8;
+      background: white;
       padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 1px solid #e9ecef;
     }
     .map-info-name {
-      font-size: 18px; font-weight: 900; color: white; line-height: 1.2;
+      font-size: 18px; font-weight: 900; color: #1a4fe8; line-height: 1.2;
     }
     .map-info-close {
-      background: transparent; border: none; color: rgba(255,255,255,.7);
+      background: transparent; border: none; color: #adb5bd;
       cursor: pointer; font-size: 20px; line-height: 1; padding: 0;
       transition: color .15s;
     }
-    .map-info-close:hover { color: white; }
+    .map-info-close:hover { color: #212529; }
     .map-info-body {
       padding: 16px 20px 20px;
       max-height: calc(70vh - 120px);
@@ -521,7 +522,7 @@
     @media (max-width: 1024px) {
       .section { padding: 64px 40px; }
       .about-subnav-inner { padding: 0 20px; }
-      h1.display { font-size: clamp(28px, 3.5vw, 40px); }
+      .display { font-size: clamp(28px, 3.5vw, 40px); }
 
       /* Timeline */
       .timeline-container { padding: 40px 48px 48px 48px; }
@@ -544,7 +545,7 @@
     /* ── 768px：平板直向 ── */
     @media (max-width: 768px) {
       .section { padding: 48px 28px; }
-      h1.display { font-size: clamp(26px, 4vw, 36px); }
+      .display { font-size: clamp(26px, 4vw, 36px); }
       .body-text { font-size: 16px; }
       .bordered-heading { font-size: 22px; }
 
@@ -594,7 +595,7 @@
     /* ── 576px：手機 ── */
     @media (max-width: 576px) {
       .section { padding: 40px 20px; }
-      h1.display { font-size: clamp(24px, 6vw, 32px); }
+      .display { font-size: clamp(24px, 6vw, 32px); }
       .body-text { font-size: 16px; max-width: 100%; }
       .section-label { font-size: 12px; }
 
@@ -1332,7 +1333,7 @@
       <div class="section section-center" style="position:relative;z-index:1">
         <div class="section-label" style="color:#6c757d">Vision &amp; Future</div>
         <h1 class="display" style="margin-bottom:8px">我們的願景</h1>
-        <h1 class="display" style="margin-bottom:36px">讓更多人 <span class="gradient-text">智慧工作 樂享生活</span></h1>
+        <p class="display" style="margin-bottom:36px">讓更多人 <span class="gradient-text">智慧工作 樂享生活</span></p>
         <div style="display:flex;flex-direction:column;gap:14px;text-align:left;max-width:900px;margin:0 auto">
           <p class="body-text">我們相信，科技最終價值在於釋放人的潛能，突破人力與能力的限制，創新於無解之題、創值於無能之處。</p>
           <p class="body-text">在 AI 重新定義產業運作的時代，鼎新數智已從軟體服務商，往AI 原生企業基礎設施提供者轉型進化，並將持續以此角色，攜手產業夥伴與客戶，成為AI轉型路上的引路人，陪伴企業穩健邁向智慧運營的新階段。</p>
@@ -1348,8 +1349,8 @@
     <section id="mission" style="background:transparent">
       <div class="section section-center">
         <div class="section-label" style="color:#212529">MISSION &amp; CAPABILITY</div>
-        <h1 class="display" style="margin-bottom:8px">我們的使命</h1>
-        <h1 class="display" style="margin-bottom:36px">用數據和智能技術 <span class="gradient-text">創新生產力</span></h1>
+        <h2 class="display" style="margin-bottom:8px">我們的使命</h2>
+        <p class="display" style="margin-bottom:36px">用數據和智能技術 <span class="gradient-text">創新生產力</span></p>
         <div style="display:flex;flex-direction:column;gap:14px;text-align:left;max-width:900px;margin:0 auto 48px">
           <p class="body-text">企業的茁壯，總是在一步一腳印中留下時代的印記；而鼎新一路走來的成功軌跡，則奠基於始終秉持的「創新、尊重、專業」企業經營理念。</p>
           <p class="body-text">鼎新的誕生源於對產業浪潮下的創新轉型的回應。1980 年代的企業數位化剛萌芽，導入成本高、開發週期長、失敗率極高，使資訊化成為少數企業才能負擔的工程。創辦人孫藹彬先生懷抱讓更多企業得以實現資訊化管理的遠見，創立「鼎新電腦」，以ERP套裝軟體的創新模式，讓數位化成為普及、可推廣、可長期維運的企業基礎建設。</p>
@@ -1688,8 +1689,8 @@
     <section id="strength" style="background:white">
       <div class="section section-center">
         <div class="section-label" style="color:#1a4fe8">Strength &amp; History</div>
-        <h1 class="display" style="margin-bottom:8px">逾四十載的產業深耕</h1>
-        <h1 class="display" style="margin-bottom:40px"><span class="gradient-text">數據的積累</span>和<span class="gradient-text">客戶的信任見證實力</span></h1>
+        <h2 class="display" style="margin-bottom:8px">逾四十載的產業深耕</h2>
+        <p class="display" style="margin-bottom:40px"><span class="gradient-text">數據的積累</span>和<span class="gradient-text">客戶的信任見證實力</span></p>
 
         <div class="stats-row">
           <div class="stat-card"><div class="stat-number gradient-text-warm">1982</div><div class="stat-label">創立年分</div></div>
@@ -2019,8 +2020,8 @@
         <div style="max-width:960px;margin:0 auto">
           <div style="text-align:center;margin-bottom:36px">
             <div class="section-label" style="color:#1a4fe8">FUTURE OUTLOOK</div>
-            <h1 class="display" style="margin-bottom:8px">深植智創 DNA</h1>
-            <h1 class="display">你我一同迎接<span style="color:#0ea5e9">數智未來</span></h1>
+            <h2 class="display" style="margin-bottom:8px">深植智創 DNA</h2>
+            <p class="display">你我一同迎接<span style="color:#0ea5e9">數智未來</span></p>
           </div>
           <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:48px">
             <p class="body-text">在產業結構與營運模式持續重組的過程中，企業所面對的不只是技術更迭，而是整體經營邏輯、組織運作與決策方式的根本轉變。鼎新正是在這樣一次次的變革與轉型歷程中，逐步調整角色定位，累積對企業營運本質的理解，並思考如何以數據與智能技術，回應企業長期發展所需的穩定性與成長性。</p>
